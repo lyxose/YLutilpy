@@ -10,7 +10,7 @@ def average_to(data:np.ndarray, n_group:int, dim=0):
     if data shapes (10,9,8), n_group=3, dim=2
     return: the averaged data shapes (10,9,3)
     '''
-    from utility.evenly_split import evenly_split
+    from .evenly_split import evenly_split
     # print(f"data.shape = {data.shape}")
     index = evenly_split(data.shape[dim],n_group)  # split index
     averaged_data=[]
