@@ -82,7 +82,8 @@ f'''# %%
 ncols = 2
 nrows =  round(np.ceil({len(fig_data)}/ncols))
 fig,axs = plt.subplots(nrows,ncols,dpi=300,figsize=(nrows*5,ncols*4))
-axs = np.reshape(axs,-1)  # use np.transpose() to change the plot order
+# axs = np.transpose(axs,[1,0])  # use this to change the plot order
+axs = np.reshape(axs,-1)  
 '''
                     f.write(fig_setting+f'for axn in range({len(fig_data)}):\n')
                     shared_vars = set(fig_data[0].keys())  #  variables shared by all of the subplots
