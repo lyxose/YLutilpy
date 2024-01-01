@@ -95,7 +95,7 @@ axs = np.reshape(axs,-1)  # use np.transpose() to change the plot order
                         if len(special_vars)>0: 
                             f.write(f'    if axn=={axn}:\n')
                             for var in special_vars:
-                                f.write(f'        {var}=data[{axn}]["{var}"]\n')
+                                f.write(f'        {var}=data[axn]["{var}"]\n')
                 else:
                     f.write(\
 f'''# %%
