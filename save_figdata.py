@@ -4,8 +4,8 @@ import pickle
 
 class figdata:
 
-    naxs = 0
-    var_dicts=[]  # list of dicts that store the variables
+    # naxs = 0
+    # var_dicts=[]  # list of dicts that store the variables
     # def __init__(self) -> None:
     #     pass
 
@@ -14,6 +14,8 @@ class figdata:
         var_names: str, the names of variables separated by comma (like "var1, var2, var3...", just copy the *variables parameters and paste them in qoutes)
         *variables: the variables in the order of var_names
         '''
+        self.naxs = 0
+        self.var_dicts = []
         if var_names is not None:
             self.add_ax(var_names, *variables)
 
