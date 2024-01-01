@@ -76,7 +76,7 @@ with open('./{data_name}','rb') as f:
     data = pickle.load(f)
 '''
                 f.write(head)
-                if type(fig_data)==list and len(fig_data)!=1:
+                if len(fig_data)!=1:
                     fig_setting = \
 f'''# %%
 ncols = 2
@@ -102,7 +102,7 @@ f'''# %%
 fig,ax = plt.subplots(1,dpi=300,figsize=(5,4))
 ''')
                     
-                    for var in fig_data.keys():
-                        f.write(fig_setting+f'{var}=data["{var}"]\n')
+                    for var in fig_data[0].keys():
+                        f.write(f'{var}=data[0]["{var}"]\n')
                 figname = os.path.basename(fpath)
                 f.write(f'\n\n# %% \nfig.savefig("{figname}.pdf")')    
