@@ -7,5 +7,6 @@ setup(
     author='Yu-Xin Lu',
     author_email='1870562999@qq.com',
     url="https://github.com/lyxose/YLutilpy",
-    packages=find_packages()
+    packages=find_packages(),
+    python_requires='>=3'
 )
