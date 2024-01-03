@@ -1,4 +1,5 @@
 import numpy as np
+
 def average_to(data:np.ndarray, n_group:int, dim=0):
     '''
     to equally (as far as possible) devide data to n_group and average at this specified dimension.

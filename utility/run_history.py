@@ -1,10 +1,8 @@
-# %% 
 from datetime import datetime
 import sys
 import os.path as op
 from os import makedirs
 import pickle
-# %% 
 
 class history:
     '''

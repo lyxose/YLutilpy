@@ -3,6 +3,7 @@ setup.py
 YLutilpy.egg-info/PKG-INFO
 YLutilpy.egg-info/SOURCES.txt
 YLutilpy.egg-info/dependency_links.txt
+YLutilpy.egg-info/requires.txt
 YLutilpy.egg-info/top_level.txt
 utility/__init__.py
 utility/average_to.py

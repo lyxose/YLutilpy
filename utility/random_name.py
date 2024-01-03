@@ -1,3 +1,7 @@
+import os
+import random
+from datetime import datetime
+
 def random_name(path=None,head='',end='') -> str:
     '''
     return a temporal file name that will not conflict with existing files 
@@ -8,9 +12,6 @@ def random_name(path=None,head='',end='') -> str:
     head: the specified file name prefix
     end: the specified file name suffix
     '''
-    import os
-    import random
-    from datetime import datetime
     now = datetime.now().strftime('%Y%m%d%H%M%S')
     filename = f'{head}_temp_{now}_{end}'
     while filename in os.listdir(path):

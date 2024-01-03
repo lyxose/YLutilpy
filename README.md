@@ -3,6 +3,11 @@ Some handy functions for Python data analysis
 
 **Usage:**
 1. by installing
+    - directly install
+    ```bat
+    pip install git+https://github.com/lyxose/YLutilpy.git
+    ```
+    - clone and install
     ```bat
     git clone https://github.com/lyxose/YLutilpy.git
     pip install ./YLutilpy

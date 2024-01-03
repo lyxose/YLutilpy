@@ -1,8 +1,5 @@
-
-# %% 
 import cv2
 import os
-import random
 
 def frame2video(path='_temp_VideoData',vidname='output'):
     '''

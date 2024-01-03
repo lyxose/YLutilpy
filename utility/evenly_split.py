@@ -1,3 +1,6 @@
+import numpy as np
+import math
+
 def evenly_split(data,n_group:int,ReturnType='index') -> list:  
     '''
     devide a int / list / ndarray to groups with min difference (0 or 1)
@@ -11,8 +14,6 @@ def evenly_split(data,n_group:int,ReturnType='index') -> list:
     *recommended usage2:*
     for this_split in np.split(data,index[1:-1],axis=0): 
     ''' 
-    import numpy as np
-    import math
     index = [0]
     num = []
     if type(data)==list:
