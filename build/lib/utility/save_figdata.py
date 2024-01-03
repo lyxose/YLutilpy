@@ -63,7 +63,7 @@ class figdata:
         if not os.path.exists(fpath):   
             os.makedirs(fpath)
         with open(f'{fpath}/data.pkl','wb+') as f:
-            pickle.dump(fig_data,f)
+            pickle.dump(fig_data,f,protocol=3)  # python>=3
         if intro_script:    
             with open(f'{fpath}/{script_name}.py','w+') as f:
                 head = \
