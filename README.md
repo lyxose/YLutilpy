@@ -11,11 +11,13 @@ Some handy functions for Python data analysis and visualization
     ```batch
     git clone https://github.com/lyxose/YLutilpy.git
     pip install ./YLutilpy
+    # pip install ./YLutilpy[create_video]   # for whole package
     ```
     Then import by
     ```python
     from YLutilpy import *
     ```
+
 2. by import source code
     Clone the repository
     ```batch
@@ -25,5 +27,13 @@ Some handy functions for Python data analysis and visualization
     ```python
     from YLutilpy import *
     ```
+
+**For dev:**
+
+```batch
+git clone https://github.com/lyxose/YLutilpy.git
+pip install -e ./YLutilpy
+```
+
 -----------------    
 updated in 2024.01.03
