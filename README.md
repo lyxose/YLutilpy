@@ -32,7 +32,7 @@ Some handy functions for Python data analysis and visualization
 
 ```batch
 git clone https://github.com/lyxose/YLutilpy.git
-pip install -e ./YLutilpy
+pip install -e ./YLutilpy[create_video]
 ```
 
 -----------------    
