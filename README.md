@@ -1,21 +1,29 @@
 # YLutilpy
-Some handy functions for Python data analysis
+Some handy functions for Python data analysis and visualization
 
 **Usage:**
 1. by installing
-    - directly install
-    ```bat
+    - Directly install
+    ```batch
     pip install git+https://github.com/lyxose/YLutilpy.git
     ```
-    - clone and install
-    ```bat
+    - Clone and install
+    ```batch
     git clone https://github.com/lyxose/YLutilpy.git
     pip install ./YLutilpy
     ```
-2. by import source code
-    Move the `utility` folder to the current work dir, then
+    Then import by
     ```python
-    from utility import *
+    from YLutilpy import *
     ```
-    
+2. by import source code
+    Clone the repository
+    ```batch
+    git clone https://github.com/lyxose/YLutilpy.git
+    ```
+    Move the **subfolder** `YLutilpy` to the current work dir, then
+    ```python
+    from YLutilpy import *
+    ```
+-----------------    
 updated in 2024.01.03
