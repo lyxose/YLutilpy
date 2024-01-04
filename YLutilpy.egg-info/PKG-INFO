@@ -5,5 +5,10 @@ Summary: Some handy functions for Python data analysis
 Home-page: https://github.com/lyxose/YLutilpy
 Author: Yu-Xin Lu
 Author-email: 1870562999@qq.com
+License: UNKNOWN
+Platform: UNKNOWN
 Requires-Python: >=3
 Provides-Extra: create_video
+
+UNKNOWN
+
