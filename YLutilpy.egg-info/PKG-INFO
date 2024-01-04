@@ -6,6 +6,4 @@ Home-page: https://github.com/lyxose/YLutilpy
 Author: Yu-Xin Lu
 Author-email: 1870562999@qq.com
 Requires-Python: >=3
-Requires-Dist: numpy
-Provides-Extra: create-video
-Requires-Dist: opencv_python; extra == "create-video"
+Provides-Extra: create_video
