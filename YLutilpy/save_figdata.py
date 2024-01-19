@@ -67,7 +67,7 @@ class figdata:
         '''
 
         fig_data = self.var_dicts
-        fig_data.append(self.desc_dicts)  # last object is desc_
+        fig_data.append(self.desc_dicts)  # last object is desc_dicts
         if not os.path.exists(fpath):   
             os.makedirs(fpath)
         with open(f'{fpath}/data.pkl','wb+') as f:
@@ -99,7 +99,10 @@ axs = np.reshape(axs,-1)
                         shared_vars = shared_vars.intersection(fig_data[axn].keys())
                     for var in shared_vars:
                         f.write(f'    {var} = data[axn]["{var}"]')
-                        desc = self.desc_dicts[0][var] # use the first description for the shared variables
+                        desc = self.desc_dicts[axn][var] 
+                        while desc is None and axn>=0:
+                            axn-=1
+                            desc = self.desc_dicts[axn][var] # use the last description for the shared variables
                         f.write(f'{f"# {desc}"if desc is not None else ""} \n') 
                     for axn in range(len(fig_data)-1):  # unique variables 
                         special_vars = set(fig_data[axn].keys()).difference(shared_vars)
@@ -108,7 +111,7 @@ axs = np.reshape(axs,-1)
                             for var in special_vars:
                                 f.write(f'        {var} = data[axn]["{var}"]')
                                 desc = self.desc_dicts[axn][var] # use the first description for the shared variables
-                                f.write(f'{f"# {desc}"if desc is not None else ""} \n') 
+                                f.write(f'{f"  # {desc}"if desc is not None else ""} \n') 
 
                 else:
                     f.write(\
