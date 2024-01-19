@@ -16,34 +16,42 @@ class figdata:
         '''
         self.naxs = 0
         self.var_dicts = []
+        self.desc_dicts = []
         if var_names is not None:
             self.add_ax(var_names, *variables)
 
-    def add_ax(self,var_names:str, *variables) -> None:
+    def add_ax(self,var_names:str|None, *variables, descriptions=[]) -> None:
         '''
         var_names: str, the names of variables separated by comma (like "var1, var2, var3...", just copy the *variables parameters and paste them in qoutes)
         *variables: the variables in the order of var_names
+        descriptions: list of None|str, to describe the variables orderly  
         '''
         self.var_dicts.append({})
+        self.desc_dicts.append({})
         self.naxs+=1
-        self.add_vars(None,var_names,*variables)
+        if var_names is not None:
+            self.add_vars(None,var_names,*variables,descriptions=descriptions)
     
-    def add_vars(self, axn:int|None, var_names:str,  *variables) -> None:
+    def add_vars(self, axn:int|None, var_names:str, *variables, descriptions=[]) -> None:
         '''
         axn: int|none, index of ax to add variables (if none, default as the latest added ax)
         var_names: str, the names of variables separated by comma (like "var1, var2, var3...", just copy the *variables parameters and paste them in qoutes)
         *variables: the variables in the order of var_names
+        descriptions: list of None|str, to describe the variables orderly  
         '''
         if axn is None:
             axn=len(self.var_dicts)-1
         var_names = var_names.split(',')
         if len(var_names)!=len(variables): 
             raise ValueError(f'The number of var_names ({len(var_names)}) is inconsistent with *variables ({len(variables)})')
-        for name,var in zip(var_names,variables):
+        for i in range(len(variables)-len(descriptions)):
+            descriptions.append(None)
+        for name,var,descriptions in zip(var_names,variables,descriptions):
             name=name.strip()  # remove the space 
             if name in self.var_dicts[axn].keys(): raise ValueError(f'{name} variable is already in dicts of ax{axn}')  # 暂不考虑覆写需求
             if ' ' in name: raise ValueError('The var_names should not contain any space')
             self.var_dicts[axn][name]=var
+            self.desc_dicts[axn][name]=descriptions
 
 
     def save_figdata(self, fpath:str, intro_script=True, script_name='defaulted_datareader', data_name='data.pkl'):
@@ -59,7 +67,7 @@ class figdata:
         '''
 
         fig_data = self.var_dicts
-
+        fig_data.append(self.desc_dicts)  # last object is desc_
         if not os.path.exists(fpath):   
             os.makedirs(fpath)
         with open(f'{fpath}/data.pkl','wb+') as f:
@@ -76,27 +84,32 @@ with open('./{data_name}','rb') as f:
     data = pickle.load(f)
 '''
                 f.write(head)
-                if len(fig_data)!=1:
+                if len(fig_data)-1!=1:
                     fig_setting = \
 f'''# %%
 ncols = 2
-nrows =  round(np.ceil({len(fig_data)}/ncols))
-fig,axs = plt.subplots(nrows,ncols,dpi=300,figsize=(nrows*5,ncols*4))
+nrows =  round(np.ceil({len(fig_data)-1}/ncols))
+fig,axs = plt.subplots(nrows,ncols,dpi=300,figsize=(ncols*4,nrows*4))
 # axs = np.transpose(axs,[1,0])  # use this to change the plot order
 axs = np.reshape(axs,-1)  
 '''
-                    f.write(fig_setting+f'for axn in range({len(fig_data)}):\n')
+                    f.write(fig_setting+f'for axn in range({len(fig_data)-1}):\n')
                     shared_vars = set(fig_data[0].keys())  #  variables shared by all of the subplots
-                    for axn in range(1,len(fig_data)):
+                    for axn in range(1,len(fig_data)-1):
                         shared_vars = shared_vars.intersection(fig_data[axn].keys())
                     for var in shared_vars:
-                        f.write(f'    {var}=data[axn]["{var}"]\n')
-                    for axn in range(len(fig_data)):
+                        f.write(f'    {var} = data[axn]["{var}"]')
+                        desc = self.desc_dicts[0][var] # use the first description for the shared variables
+                        f.write(f'{f"# {desc}"if desc is not None else ""} \n') 
+                    for axn in range(len(fig_data)-1):  # unique variables 
                         special_vars = set(fig_data[axn].keys()).difference(shared_vars)
                         if len(special_vars)>0: 
                             f.write(f'    if axn=={axn}:\n')
                             for var in special_vars:
-                                f.write(f'        {var}=data[axn]["{var}"]\n')
+                                f.write(f'        {var} = data[axn]["{var}"]')
+                                desc = self.desc_dicts[axn][var] # use the first description for the shared variables
+                                f.write(f'{f"# {desc}"if desc is not None else ""} \n') 
+
                 else:
                     f.write(\
 f'''# %%
@@ -104,6 +117,7 @@ fig,ax = plt.subplots(1,dpi=300,figsize=(5,4))
 ''')
                     
                     for var in fig_data[0].keys():
-                        f.write(f'{var}=data[0]["{var}"]\n')
+                        f.write(f'{var} = data[0]["{var}"]')
+                        f.write(f'# {self.desc_dicts[axn][var]}\n')
                 figname = os.path.basename(fpath)
                 f.write(f'\n\n# %% \nfig.savefig("{figname}.pdf")')    
