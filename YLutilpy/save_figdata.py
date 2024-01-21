@@ -1,6 +1,7 @@
 from typing import Optional
 import os
 import pickle
+import shutil
 
 class figdata:
 
@@ -28,7 +29,7 @@ class figdata:
         '''
         self.var_dicts.append({})
         self.desc_dicts.append({})
-        self.naxs+=1
+        self.naxs += 1
         if var_names is not None:
             self.add_vars(None,var_names,*variables,descriptions=descriptions)
     
@@ -73,13 +74,16 @@ class figdata:
         with open(f'{fpath}/data.pkl','wb+') as f:
             pickle.dump(fig_data,f,protocol=3)  # python>=3
         if intro_script:    
+            shutil.copy(f'{os.path.dirname(__file__)}/default_img_set.py',fpath)
             with open(f'{fpath}/{script_name}.py','w+') as f:
                 head = \
 f'''# %%
 import pickle 
 import numpy as np
 import matplotlib.pyplot as plt
+from default_img_set import default_img_set 
 
+default_img_set()
 with open('./{data_name}','rb') as f:
     data = pickle.load(f)
 '''
@@ -110,17 +114,15 @@ axs = np.reshape(axs,-1)
                             f.write(f'    if axn=={axn}:\n')
                             for var in special_vars:
                                 f.write(f'        {var} = data[axn]["{var}"]')
-                                desc = self.desc_dicts[axn][var] # use the first description for the shared variables
+                                desc = self.desc_dicts[axn][var]
                                 f.write(f'{f"  # {desc}"if desc is not None else ""} \n') 
-
                 else:
                     f.write(\
 f'''# %%
 fig,ax = plt.subplots(1,dpi=300,figsize=(5,4))
 ''')
-                    
                     for var in fig_data[0].keys():
                         f.write(f'{var} = data[0]["{var}"]')
-                        f.write(f'# {self.desc_dicts[axn][var]}\n')
+                        f.write(f'# {self.desc_dicts[0][var]}\n')
                 figname = os.path.basename(fpath)
                 f.write(f'\n\n# %% \nfig.savefig("{figname}.pdf")')    
