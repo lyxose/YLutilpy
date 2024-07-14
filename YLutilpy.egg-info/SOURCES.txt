@@ -3,6 +3,7 @@ setup.py
 YLutilpy/__init__.py
 YLutilpy/average_to.py
 YLutilpy/create_video.py
+YLutilpy/default_img_set.py
 YLutilpy/evenly_split.py
 YLutilpy/random_name.py
 YLutilpy/rewrite_folder.py

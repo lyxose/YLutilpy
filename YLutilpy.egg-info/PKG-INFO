@@ -1,14 +1,11 @@
 Metadata-Version: 2.1
 Name: YLutilpy
-Version: 0.0.2
+Version: 0.0.3
 Summary: Some handy functions for Python data analysis
 Home-page: https://github.com/lyxose/YLutilpy
 Author: Yu-Xin Lu
 Author-email: 1870562999@qq.com
-License: UNKNOWN
-Platform: UNKNOWN
 Requires-Python: >=3
-Provides-Extra: create_video
-
-UNKNOWN
-
+Requires-Dist: numpy
+Provides-Extra: create-video
+Requires-Dist: opencv_python; extra == "create-video"
