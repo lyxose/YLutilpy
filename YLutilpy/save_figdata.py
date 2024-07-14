@@ -55,7 +55,7 @@ class figdata:
             self.desc_dicts[axn][name]=descriptions
 
 
-    def save_figdata(self, fpath:str, intro_script=True, script_name='defaulted_datareader', data_name='data.pkl'):
+    def save_figdata(self, fpath:str, intro_script=True, script_name='defaulted_datareader', data_name='data.pkl', rewrite=False):
         '''
         fig_data: dict | list of dict, the key should be the name of the variable
         fpath: str, folder path to save figdata
@@ -71,9 +71,13 @@ class figdata:
         fig_data.append(self.desc_dicts)  # last object is desc_dicts
         if not os.path.exists(fpath):   
             os.makedirs(fpath)
+        if os.path.exists(f'{fpath}/data.pkl'):
+            raise FileExistsError(f'{fpath}/data.pkl already exists!!!')
         with open(f'{fpath}/data.pkl','wb+') as f:
             pickle.dump(fig_data,f,protocol=3)  # python>=3
         if intro_script:    
+            if os.path.exists(f'{fpath}/default_img_set.py'):
+                raise FileExistsError(f'{fpath}/default_img_set.py already exists!!!')
             shutil.copy(f'{os.path.dirname(__file__)}/default_img_set.py',fpath)
             with open(f'{fpath}/{script_name}.py','w+') as f:
                 head = \
