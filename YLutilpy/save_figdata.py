@@ -31,13 +31,13 @@ class figdata:
         self.desc_dicts.append({})
         self.naxs += 1
         if var_names is not None:
-            self.add_vars(None,var_names,*variables,descriptions=descriptions)
+            self.add_vars(var_names,*variables,axn = None,descriptions = descriptions)
     
-    def add_vars(self, axn:int|None, var_names:str, *variables, descriptions=[]) -> None:
+    def add_vars(self,  var_names:str, *variables, axn:int=None,descriptions=[]) -> None:
         '''
-        axn: int|none, index of ax to add variables (if none, default as the latest added ax)
         var_names: str, the names of variables separated by comma (like "var1, var2, var3...", just copy the *variables parameters and paste them in qoutes)
         *variables: the variables in the order of var_names
+        axn: int | none (default), index of ax to add variables (if none, default as the latest added ax)
         descriptions: list of None|str, to describe the variables orderly  
         '''
         if axn is None:
