@@ -71,12 +71,12 @@ class figdata:
         fig_data.append(self.desc_dicts)  # last object is desc_dicts
         if not os.path.exists(fpath):   
             os.makedirs(fpath)
-        if os.path.exists(f'{fpath}/data.pkl'):
+        if os.path.exists(f'{fpath}/data.pkl' and not rewrite):
             raise FileExistsError(f'{fpath}/data.pkl already exists!!!')
-        with open(f'{fpath}/data.pkl','wb+') as f:
+        with open(f'{fpath}/data.pkl','wb+') as f: 
             pickle.dump(fig_data,f,protocol=3)  # python>=3
         if intro_script:    
-            if os.path.exists(f'{fpath}/default_img_set.py'):
+            if os.path.exists(f'{fpath}/default_img_set.py' and not rewrite):
                 raise FileExistsError(f'{fpath}/default_img_set.py already exists!!!')
             shutil.copy(f'{os.path.dirname(__file__)}/default_img_set.py',fpath)
             with open(f'{fpath}/{script_name}.py','w+') as f:
