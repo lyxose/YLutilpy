@@ -73,7 +73,7 @@ class figdata:
             os.makedirs(fpath)
         if os.path.exists(f'{fpath}/data.pkl' and not rewrite):
             raise FileExistsError(f'{fpath}/data.pkl already exists!!!')
-        with open(f'{fpath}/data.pkl','wb+') as f: 
+        with open(f'{fpath}/data.pkl','wb+') as f:
             pickle.dump(fig_data,f,protocol=3)  # python>=3
         if intro_script:    
             if os.path.exists(f'{fpath}/default_img_set.py' and not rewrite):
