@@ -42,6 +42,6 @@ def evenly_split(data,n_group:int,ReturnType='index') -> list:
         return index 
     elif ReturnType=='map':
         datamap = np.array([i for i in range(data)])
-        return [np.where(datamap>=index[i] and datamap<index[i+1]) for i in range(len(index)-1)]
+        return [(datamap>=index[i]) * (datamap<index[i+1]) for i in range(len(index)-1)]
     elif ReturnType=='num':
         return num
