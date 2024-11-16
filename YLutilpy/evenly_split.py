@@ -1,3 +1,4 @@
+# 20241116
 import numpy as np
 import math
 
@@ -9,9 +10,14 @@ def evenly_split(data,n_group:int,ReturnType='index') -> list:
     e.g. 
     data = [1,2,3,4,5,6,7,8,9,10,11,12,13]
     index = evenly_split(data,5) -> index = [0,3,5,7,10,13] 
-    *recommended usage1:*
-    for i in range(len(index)-1): data[index[i]:index[i+1]]...
+    
+    *recommended usage for numpy:*
+    for idx in evenly_split(data, 5, 'map'): data[idx]...
+    
     *recommended usage2:*
+    for i in range(len(index)-1): data[index[i]:index[i+1]]...
+    
+    *recommended usage3:*
     for this_split in np.split(data,index[1:-1],axis=0): 
     ''' 
     index = [0]
@@ -32,4 +38,10 @@ def evenly_split(data,n_group:int,ReturnType='index') -> list:
                 index.append(index[-1]+n)
                 num.append(n)
     else: raise TypeError('data should be an int / list / ndarray')
-    return index if ReturnType=='index' else num
+    if ReturnType=='index':
+        return index 
+    elif ReturnType=='map':
+        datamap = np.array([i for i in range(data)])
+        return [np.where(datamap>=index[i] and datamap<index[i+1]) for i in range(len(index)-1)]
+    elif ReturnType=='num':
+        return num
